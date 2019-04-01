@@ -1,26 +1,19 @@
 ### Plotting with ggplot ###
 
-
-# As mentioned in the slides, we'll be using ggplot2 to do our plotting today. First, let's load up the package:
-
-library(ggplot2)
-
-# We'll also use some data from gapminder for illustrative purposes. This data doesn't have to be read in from outside R, as it is 
+# We'll ause some data from gapminder for illustrative purposes. This data doesn't have to be read in from outside R, as it is 
 # contained within the gapminder package. Let's load that package up as well: 
 
 library(gapminder)
 
 gapminder
 
-
-# Just so you don't trip up - while the package is called ggplot2, the main function in the package is called ggplot!
-
-# With ggplot, we build up our plots in layers - creating a canvas, specifying aesthetics, and choosing geoms - geometric
+# With the ggplot function, we build up our plots in layers - creating a canvas, specifying aesthetics, and choosing geoms - geometric
 # objects to represent our data. The syntax is similar to what we learned in dplyr, but ggplot was created before that package
 # was invented, so instead of the pipe symbol (%>%) it uses the + sign. 
 
 # If we run ggplot specifying only our data, we get an empty canvas. We've told the software where the variables of interest are, but
 # not how to map them to graphics. 
+
 ggplot(data = gapminder)
 
 
@@ -98,7 +91,7 @@ ggplot(data = manylabs, aes(x = location, y = age)) +
 # may have had.  
 
 # Exercise
-# 1. Create a box plot to show the distribution on gambfalDV by gambfalgroup (You'll need the x, y, and fill aesthetics.)
+# 1. Create a box plot to show the distribution on gambfalDV by gambfalgroup
 # 2. Change the box plot to a violin plot
 # 3. Try using the same plot on another experiment - the anch1group variable codes the manipulation for a classic
 #    anchoring experiment, and anchoring1 contains the outcome. 
@@ -208,7 +201,7 @@ gapminder %>%
     guides(color = guide_legend(title = 'Continent'),
            size = guide_legend(title = 'Population \n (Millions)')) +
     theme(panel.background = element_rect(fill = 'white'),
-          axis.title.x = element_text(vjusst = -1))
+          axis.title.x = element_text(vjust = -1))
 
 # If we want to save out graphics to a file, the ggsave function will output the most recent graph. 
 ggsave('Megaplot.png')

@@ -57,7 +57,6 @@ summary(model.1)
 #    number of political issues (flagdv). Fit a model testing the effects of this experimental manipulation, and examine it with summary() and anova()
 
 
-
 # Interaction effects can be tested in R using the * operator. For instance, age*sex would fit the interaction of age and sex. By default, when you fit 
 # an interaction, R will also include the main effects of each of those predictors in the model, because it is generally a bad idea to fit interactions
 # on their own!

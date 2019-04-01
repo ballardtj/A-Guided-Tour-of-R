@@ -60,11 +60,11 @@ Very_Long_Variable
 ### Exercises
 
 # 1. Calculate 10 to the power of 3
-10 ^ 3
+
 # 2. Create a variable d that contains the number 5
-d <- 5
+
 # 3. Create a variable e that contains the result of dividing d by 2
-e <- (d/2)
+
 
 
 ### Functions ###
@@ -133,17 +133,45 @@ length(y)
 ### Exercises
 
 # 1. Find the square root of 130. 
-sqrt(130)
+
 # 2. Save a number of your choice as a variable, then take the square root of that variable
-d <- 10
-sqrt(d)
+
+
 # 3. Use the seq function to generate the following sequence: 2, 5, 8, 11, 14, 17, 20
-seq(2, 20, 3)
+
 # 4. Use the up arrow to alter the code you used above, and save the result in a variable called num
-num <- seq(2, 20, 4)
+
 # 5. calculate the mean and median of the num variable
-mean(num)
-median(num)
+
+
+### Indexing ###
+
+#We use indexing to pull information out of vectors. Vector indexes can be single numbers, 
+#or they can be vectors themselves.
+
+z = c(3,6,4,3,5,8,6,12)
+
+z[2]
+
+z[4]
+
+z[92]
+
+z[5:6]
+
+z[c(3,6,7)]
+
+w = z[4]
+
+### Exercises
+
+# 1. Extract the 7th elemment of vector z
+
+# 2. Extract the first and fourth elements of vector z
+
+# 3. Find the sum of the second and third elements of vector z
+
+# 4. Write a command that returns the following vector: 12 4 6
 
 
 # Now the last thing you'll want to do in this section is clear out your workspace, removing all the variables you've created.

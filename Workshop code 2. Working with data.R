@@ -13,13 +13,10 @@ install.packages('tidyverse')
 
 library(tidyverse)
 
-library(readr)
-
 # Now, the last step before we load in our own data is to change our working directory. This is the default folder where R will look for 
 # data. In RStudio, click 'Session', 'Set working directory', and 'Choose directory'. Then navigate to the folder with the data and code for
 # today's course, and select this. You'll notice some code appear in the Console window - this is the function to change the working directory,
 # which you can use instead of the dropdown menu once you're more used to R. 
-
 
 # Now let's read in our data. We'll use the read_csv function. Notice that we save the dataset into a variable in the same fashion as we did 
 # with simple numbers. 
@@ -57,6 +54,9 @@ glimpse(manylabs)
 
 # Get some basic descriptive statistics for the data. 
 summary(manylabs)
+
+# Open dataset in its own tab
+View(manylabs)
 
 
 # Now we're going to get familiar with the tools you'll need
@@ -169,6 +169,9 @@ filter(manylabs, sex == 'f' | sex == 'm')
 # Keep rows where sex is female and age is above 18
 filter(manylabs, sex == 'f' & age > 18)
 
+#Alternatively, the following returns the same result
+filter(manylabs, sex == 'f', age > 18)
+
 # Keep rows where sex is not male
 filter(manylabs, sex != 'm')
 
@@ -206,6 +209,7 @@ filter(manylabs, !is.na(expgender))
 # Filter the manylabs dataset so that:
 # 1. Only male experimenters are included:
 # Hint: To see what values are in the variable, try: 
+
 count(manylabs, expgender)
 
 
@@ -223,9 +227,9 @@ count(manylabs, expgender)
 # multiple separate steps, where we save the results of each function as input to the next function. 
 
 manylabs_filter <- filter(manylabs, sex == 'm')
-manylabs_filter <- select(manylabs_filter, 1:10)
+manylabs_filter_select <- select(manylabs_filter, 1:10)
 
-manylabs_filter
+manylabs_filter_select
 
 # However, creating intermediate datasets can get messy, especially if we just want to look at the results of our filtering/selecting, 
 # rather than save them. 
@@ -271,8 +275,10 @@ mydat <- manylabs %>%
 arrange(manylabs, age, sex)
 
 # To sort in reverse order, we use the desc() function. 
-
 arrange(manylabs, desc(age))
+
+#Alaternatively, the following returns the same results
+arrange(manylabs, -age)
 
 # These two are equivalent
 arrange(manylabs, age) %>% 
@@ -300,8 +306,7 @@ manylabs_r
 # To create a new variable, we give it a name (we can use quotation marks here, but they're not necessary) and specify the operation to create it. 
 # For instance, if we wanted to reverse-score the flagdv1 variable, we could do so like this:
 
-mutate(manylabs_r, flagdv1_rev = 8 - flagdv1) %>%
-  select(starts_with('flag'))
+mutate(manylabs_r, flagdv1_rev = 8 - flagdv1) 
 
 # We can also calculate a set of new variables at once:
 
@@ -332,10 +337,7 @@ manylabs_r %>%
 
 # 1. Using manylabs_r, create a variable, called age_months, corresponding to each participant's age in months.
 
-
 # 2. Reverse-score sunkDV (it's on a 1 to 9 scale)
-
-
 
 ### summarise ###
 
@@ -345,10 +347,15 @@ manylabs_r %>%
 
 summarise(manylabs, age_av = mean(age, na.rm = TRUE))
 
-
-
 # Notice the na.rm = TRUE argument - without this, if there are any NA values, the result of most summary functions will also be NA. Specifying this
 # argument instead means we ignore them as if they are not there. 
+
+# The summarise function can be used to create any number of summary variables
+
+summarise(manylabs, age_av = mean(age, na.rm = TRUE),
+                    age_sd = sd(age, na.rm = TRUE),
+                    age_min = min(age, na.rm = TRUE),
+                    age_max = max(age, na.rm = TRUE))
 
 
 # While summarise can be useful to calculate summary statistics across an entire dataset, it becomes much more powerful when we combine it
@@ -391,16 +398,17 @@ manylabs %>%
   summarise(mean_age = mean(age, na.rm = TRUE), 
             sd_age = sd(age, na.rm = TRUE),
             sample_size = n()) %>%
-  arrange(desc(mean_age))
+  arrange(-mean_age)
 
 # The benefit of functions like this becomes clear when you want to look at summary statistics across multiple variables. 
 # Just change location to something else (like lab_or_online) and you've got a completely different table.
+
 manylabs %>% 
   group_by(lab_or_online) %>%
   summarise(mean_age = mean(age, na.rm = TRUE),
             sd_age = sd(age, na.rm = TRUE),
             sample_size = n()) %>%
-  arrange(desc(mean_age))
+  arrange(-mean_age)
 
 
 ### Exercises
@@ -411,8 +419,7 @@ manylabs %>%
 
 # 2. Add a command to also get the standard deviation of system justification at each location
 
-
-# 3. arrange locations in order of highest to lowest system justification (remember the desc function)
+# 3. arrange locations in order of highest to lowest system justification
 
 # 4. Change the group_by command in your code to use sex instead of location. Notice how easily you can get different summaries! 
 
@@ -433,6 +440,6 @@ manylabs %>%
   group_by(location) %>%
   select(adult, male, white) %>%
   summarise_all(function(x) round(mean(x, na.rm = TRUE), 2)) %>%
-  arrange(desc(male)) %>%
+  arrange(-male) %>%
   as.data.frame()
 
